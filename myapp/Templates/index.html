@@ -1,0 +1,315 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h2>Hello world!</h2>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h2>{{header}}</h2>-->
+<!--    <p>{{message}}</p>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>{{header}}</h1>-->
+<!--    <p>Name: {{user.name}} age:{{user.age}}</p>-->
+<!--    <p>Adres: ad.{{address.0}},number.{{address.1}},apartment.{{address.2}}</p>-->
+<!--    <p>Languages: {{langs.0}},{{langs.1}}</p>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    {{body}}-->
+<!--    {% autoescape off %}-->
+<!--        {{body}}-->
+<!--    {% endautoescape %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    {% comment %}-->
+<!--        <p>Вывод содержимого в шаблон Django</p>-->
+<!--    {% endcomment %}-->
+<!--    {{body}}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    {% if n > 0 %}-->
+<!--        <p>Положительное число</p>-->
+<!--    {% elif n < 0  %}-->
+<!--        <p>Число отрицательное</p>-->
+<!--    {% else %}-->
+<!--        <p>Число равно нулю</p>-->
+<!--    {% endif %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <ul>-->
+<!--        {% for lan in langs %}-->
+<!--        <li>{{lan}}</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    {% for key, value in data.items %}-->
+<!--        <p>{{key}}:{{value}}</p>-->
+<!--    {% endfor %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    {% with name="Tom" age=29 %}-->
+<!--    <div>-->
+<!--        <p>Name: {{ name }}</p>-->
+<!--        <p>Age: {{ age }}</p>-->
+<!--    </div>-->
+<!--    {% endwith %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <p>{% now "Y" %}</p>-->
+<!--    <p>{% now "F j Y" %}</p>-->
+<!--    <p>{% now "N, j, Y" %}</p>-->
+<!--    <p>{% now "N j, Y, P" %}</p>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang='eng'>-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div>-->
+<!--{% with message="Hello" %}-->
+<!--    <h2>{{ message|add:" Django" }}</h2>-->
+<!--{% endwith %}-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--{% with message="Я был дома" %}-->
+<!--    {{ message|cut:"был" }}-->
+<!--{% endwith %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--{% with isEnabled=False %}-->
+<!--    {{ isEnabled|default:"unabled" }}-->
+<!--{% endwith %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--{% with name="" %}-->
+<!--    {{ name|default:"Undefined" }}-->
+<!--{% endwith %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--{% with user=None %}-->
+<!--    {{ user|default_if_none:"Undefined" }}-->
+<!--{% endwith %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div>-->
+<!--<h2>{{ my_date|date:"d.m.Y" }}</h2>-->
+<!--<h2>{{ my_date|date:"H:i" }}</h2>-->
+<!--<h2>{{ my_date|date:"c" }}</h2>-->
+<!--<h2>{{ my_date|date:"SHORT_DATE_FORMAT" }}</h2>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--{% load static %}-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <link rel="stylesheet" href="{% static "css/styles.css" %}" />-->
+<!--    <title>Django на METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Зимний лес</h1>-->
+<!--    <img src="{% static "images/forest.jpg" %}" alt="зимний лес" >-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django on METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Hello METANIT.COM!</h1>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h2>Главная страница</h2>-->
+<!--    {% include 'banner.html' with tutorial='Python' %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta charset="utf-8" />
+    <title>Django kurs</title>
+</head>
+<body>
+<h2>User form</h2>
+<form method="post" action="postuser/">
+    {%csrf_token%}
+    <p>Name: <br> <input name="name" ></p>
+    <p>Age: <br> <input name="age" type="number"></p>
+    <input type="submit" value="Send">
+</form>
+</body>
+</html>
