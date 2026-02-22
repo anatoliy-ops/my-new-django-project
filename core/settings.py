@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ajvd^7^($!5m-y^m*-2vok-nsz$@m@z6jo@z!9lr55a@i@ta6h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['anatoliy228.pythonanywhere.com/']
+ALLOWED_HOSTS = ['anatoliy228.pythonanywhere.com']
 
 
 # Application definition
@@ -57,7 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / "metanit/templates",
+            BASE_DIR / 'myapp' / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
