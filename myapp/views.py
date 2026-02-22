@@ -6,6 +6,8 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanen
     HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
 from django.template.response import TemplateResponse
 
+from .forms import UserForm
+
 
 # def index(request):
 #     return HttpResponse("Hello")
@@ -234,9 +236,41 @@ from django.template.response import TemplateResponse
 
 
 
-def index(request):
-    return render(request, "index.html")
-def postuser(request):
-    name=request.POST.get("name",'Undefined')
-    age=request.POST.get("age",1)
-    return HttpResponse(f"<h2>Name: {name}  Age: {age}</h2>")
+# def index(request):
+#     return render(request, "index.html")
+# def postuser(request):
+#     name=request.POST.get("name",'Undefined')
+#     age=request.POST.get("age",1)
+#     return HttpResponse(f"<h2>Name: {name}  Age: {age}</h2>")
+
+
+# def index(request):
+#     return render(request, "index.html")
+# def postuser(request):
+#     name = request.POST.get("name", "Undefined")
+#     age = request.POST.get("age", 1)
+#     langs = request.POST.getlist("languages", ["python"])
+#
+#     return HttpResponse(f"""
+#                 <div>Name: {name}  Age: {age}<div>
+#                 <div>Languages: {langs}</div>
+#             """)
+
+
+
+# def index(request):
+#     userform = UserForm()
+#     return render(request, "index.html", {"form": userform})
+
+
+
+# def index(request):
+#     if request.method == "POST":
+#         name = request.POST.get("name")
+#         age = request.POST.get("age")
+#         return HttpResponse(f"<h2>Привет, {name}, твой возраст: {age}</h2>")
+#     else:
+#         userform = UserForm()
+#         return render(request, "index.html", {"form": userform})
+
+
