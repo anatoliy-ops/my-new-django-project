@@ -1,11 +1,12 @@
-from datetime import datetime
+import asyncio
+from datetime import datetime, date, time
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponseForbidden, \
     HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
 from django.template.response import TemplateResponse
-
+from .models import Person,Order
 from .forms import UserForm
 
 
@@ -264,13 +265,179 @@ from .forms import UserForm
 
 
 
-def index(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        age = request.POST.get("age")
-        return HttpResponse(f"<h2>Привет, {name}, твой возраст: {age}</h2>")
-    else:
-        userform = UserForm()
-        return render(request, "index.html", {"form": userform})
+# def index(request):
+#     if request.method == "POST":
+#         name = request.POST.get("name")
+#         age = request.POST.get("age")
+#         return HttpResponse(f"<h2>Привет, {name}, твой возраст: {age}</h2>")
+#     else:
+#         userform = UserForm()
+#         return render(request, "index.html", {"form": userform})
 
 
+
+
+# def index(request):
+#     if request.method == 'POST':
+#         userform = UserForm(request.POST)
+#         if userform.is_valid():
+#             name = userform.cleaned_data['name']
+#             return HttpResponse(f'<h2>Hello {name}</h2>')
+#         else:
+#             return HttpResponse(f'<h2>Invalid data</h2>')
+#     else:
+#         userform = UserForm()
+#         return render(request, 'index.html', {'form': userform})
+
+
+
+# def index(request):
+#     userform = UserForm()
+#     if request.method == 'POST':
+#         userform = UserForm(request.POST)
+#         if userform.is_valid():
+#             name = userform.cleaned_data['name']
+#             return HttpResponse(f'<h2>Hello {name}</h2>')
+#     return render(request, 'index.html', {'form': userform})
+
+
+
+# people=Person.objects.all()
+# print(people.query)
+# people=people.filter(name='Tom')
+# print(people.query)
+# people=people.filter(age=31)
+# print(people.query)
+# for person in people:
+#     print(f'{people.id}.{person.name}-{person.age}')
+
+
+
+# tom=Person.objects.create(name="Tom",age=23)
+# print(tom.id)
+
+
+# async def acreate_person():
+#     person = await Person.objects.acreate(name='Tim',age=20)
+#     print(person.name)
+# asyncio.run(acreate_person())
+
+
+
+# tom=Person.objects.create(name="Tom",age=23)
+# tom.save()
+# print(tom.id)
+
+
+# people=Person.objects.bulk_create([
+#     Person(name='Kate',age=20),
+#     Person(name='Ann',age=30),
+# ])
+# for person in people:
+#     print(f'{person.id}.{person.name}')
+
+
+# tom=Person.objects.get(name='Bob')
+# bob=Person.objects.get(age=24)
+# print(tom)
+# print(bob)
+
+
+# bob,created = Person.objects.get_or_create(name='Bob',age=24)
+# print(created)
+# print(bob.name)
+# print(bob.age)
+
+
+# # получаем пользователя по имени Tom
+# tom = Person.objects.get(name__exact="Tom")
+# # получаем пользователей, у которых возраст равен 32
+# people_by_age = Person.objects.filter(age__exact=32)
+# # получаем пользователя по имени Tom или tom или TOM
+# tom = Person.objects.get(name__iexact="Tom")
+
+
+# # получаем пользователей, у которых имя равно NULL
+# people_by_name = Person.objects.filter(name__exact=None)
+
+
+# # получаем пользователей, у которых имя содержит букву o
+# people1 = Person.objects.filter(name__contains="o")
+# print(people1.query)
+# # получаем пользователей, у которых имя содержит букву T или t
+# people2 = Person.objects.filter(name__icontains="T")
+# print(people2.query)
+
+
+# # получаем пользователей, у которых возраст равен или 32, или 35, или 38,
+# people = Person.objects.filter(age__in=[32, 35, 38])
+# print(people.query)
+
+
+# # получаем пользователей, у которых возраст меньше или равен 32
+# people = Person.objects.filter(age__lte=32)
+# # получаем пользователей, у которых возраст больше 40
+# people1 = Person.objects.filter(age__gt=40)
+
+
+# # получаем пользователей, у которых имя начинается с To
+# people = Person.objects.filter(name__startswith="To")
+# # получаем пользователей, у которых имя начинается с To или to
+# people1 = Person.objects.filter(name__istartswith="To")
+
+
+# # получаем пользователей, у которых имя заканчивается на m
+# people = Person.objects.filter(name__endswith="m")
+# # получаем пользователей, у которых имя заканчивается на m или M
+# people1 = Person.objects.filter(name__iendswith="m")
+
+
+# # получаем пользователей, у которых возраст в диапазоне от 28 до 38 включительно
+# people = Person.objects.filter(age__range=(28, 38))
+
+
+# # получаем пользователей, у которых имя не установлено
+# people = Person.objects.filter(name__isnull=True)
+# # получаем пользователей, у которых возраст установлен
+# people1 = Person.objects.filter(age__isnull=False)
+
+
+# # получаем пользователей, у которых имя заканчивается на am или om
+# people = Person.objects.filter(name__regex=r"(am|om)$")
+
+
+# # добавление начальных данных
+# if Order.objects.count() == 0:
+#     Order.objects.create(datetime=datetime(2021, 12, 26, 11, 25, 34))
+#     Order.objects.create(datetime=datetime(2022, 5, 12, 12, 25, 34))
+#     Order.objects.create(datetime=datetime(2022, 5, 22, 13, 25, 34))
+#     Order.objects.create(datetime=datetime(2022, 8, 19, 14, 25, 34))
+# # получаем заказы, сделанные в 5-м месяце
+# orders = Order.objects.filter(datetime__month=5)
+# for order in orders:
+#     print(order.datetime)
+# # получаем заказы, сделанные после 5-го месяца
+# orders = Order.objects.filter(datetime__month__gt=5)
+# for order in orders:
+#     print(order.datetime)
+
+
+# if Order.objects.count() == 0:
+#     Order.objects.create(datetime=datetime(2021, 12, 26, 11, 25, 34))
+#     Order.objects.create(datetime=datetime(2022, 5, 12, 12, 25, 34))
+#     Order.objects.create(datetime=datetime(2022, 5, 22, 13, 25, 34))
+#     Order.objects.create(datetime=datetime(2022, 8, 19, 14, 25, 34))
+# # получаем заказы, сделанные 22 мая
+# orders = Order.objects.filter(datetime__date=date(2022, 5, 22))
+# for order in orders:
+#     print(order.datetime)
+# # получаем заказы, сделанные после 12 часов
+# orders = Order.objects.filter(datetime__time__gt=time(12, 20, 0))
+# for order in orders:
+#     print(order.datetime)
+
+
+
+# people = Person.objects.filter(name="Tom") & Person.objects.filter(age=22)  ##& это and
+# people = Person.objects.filter(name="Tom") | Person.objects.filter(age=22)  ##| это or
+# people = Person.objects.filter(name="Tom") ^ Person.objects.filter(age=22)  ##^ это xor-В данном случае в базе данных будет идти поиск строки, в которой истинно либо условие name="Tom", либо поле условие age=22, но не одновременно оба условия. На уровне базы данных могут формироваться различные выражения в зависимости от поддержки оператора XOR.

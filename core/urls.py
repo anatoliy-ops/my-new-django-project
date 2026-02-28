@@ -174,6 +174,10 @@ from myapp  import views
 
 
 
+# urlpatterns = [
+#     path("", views.index),
+# ]
+
+
 urlpatterns = [
-    path("", views.index),
 ]
