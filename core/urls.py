@@ -185,3 +185,4 @@ urlpatterns = [
     path('edit/<int:id>/',views.edit),
     path('delete/<int:id>/',views.delete),
 ]
+

@@ -634,3 +634,4 @@ def delete(request,id):
         return HttpResponseRedirect('/')
     except Person.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
+
