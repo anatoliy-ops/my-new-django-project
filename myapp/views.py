@@ -1,5 +1,6 @@
 import asyncio
 from datetime import datetime, date, time
+from os import name
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render
@@ -8,7 +9,8 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanen
 from django.template.response import TemplateResponse
 from .models import Person,Order
 from .forms import UserForm
-
+from django.db.models import Avg, Max, Min, Sum
+from django.db import connection
 
 # def index(request):
 #     return HttpResponse("Hello")
@@ -438,6 +440,197 @@ from .forms import UserForm
 
 
 
-# people = Person.objects.filter(name="Tom") & Person.objects.filter(age=22)  ##& это and
-# people = Person.objects.filter(name="Tom") | Person.objects.filter(age=22)  ##| это or
-# people = Person.objects.filter(name="Tom") ^ Person.objects.filter(age=22)  ##^ это xor-В данном случае в базе данных будет идти поиск строки, в которой истинно либо условие name="Tom", либо поле условие age=22, но не одновременно оба условия. На уровне базы данных могут формироваться различные выражения в зависимости от поддержки оператора XOR.
+# people = Person.objects.filter(name="Tom") & Person.objects.filter(age=22)  ## & это and
+# people = Person.objects.filter(name="Tom") | Person.objects.filter(age=22)  ## | это or
+# people = Person.objects.filter(name="Tom") ^ Person.objects.filter(age=22)  ## ^ это xor-В данном случае в базе данных будет идти поиск строки, в которой истинно либо условие name="Tom", либо поле условие age=22, но не одновременно оба условия. На уровне базы данных могут формироваться различные выражения в зависимости от поддержки оператора XOR.
+
+
+
+
+# people=Person.objects.order_by('name')
+# for person in people:
+#     print(person.name)
+
+
+
+
+
+# people=Person.objects.order_by('name','age')
+# for person in people:
+#     print(person.name,person.age)
+
+
+
+# people=Person.objects.values()
+# print(people)
+
+
+
+# people=Person.objects.values('id','name')
+# print(people)
+
+
+
+# people=Person.objects.values_list()
+# print(people)
+
+
+# people=Person.objects.values_list('id','name')
+# print(people)
+
+
+# people=Person.objects.values_list('name',flat=True)
+# print(people)
+
+
+# people=Person.objects.values_list('name',flat=True).distinct()  #distinct убирает дубли
+# print(people)
+
+
+
+# toms=Person.objects.filter(name='Tom')
+# bobs=Person.objects.filter(name='Bob')
+# people=toms.union(bobs)
+# print(people.values())
+
+
+
+# toms=Person.objects.filter(name='Tom')
+# bobs=Person.objects.filter(name='Bob')
+# people=toms.values('name').union(bobs)
+# print(people)
+
+
+
+# toms=Person.objects.filter(name='Tom')
+# less35=Person.objects.filter(age__lt=35)
+# people=toms.intersection(less35)
+# print(people.values())
+
+
+
+# toms=Person.objects.filter(name='Tom')
+# less35=Person.objects.filter(age__lt=35)
+# people=toms.difference(less35)
+# print(people)
+
+
+
+# latest_person=Person.objects.latest('id')
+# print(f'{latest_person.name}-{latest_person.age}')
+
+
+
+# earliest_person=Person.objects.earliest('id')
+# print(f'{earliest_person.name}-{earliest_person.age}')
+
+
+
+# first_person=Person.objects.first()
+# print(f'{first_person.name}-{first_person.age}')
+# last_person=Person.objects.last()
+# print(f'{last_person.name}-{last_person.age}')
+
+
+
+# first_person=Person.objects.order_by('age').first()
+# print(f'{first_person.name}-{first_person.age}')
+
+
+# is_present=Person.objects.filter(name='Tom').exists()
+# if is_present:
+#     print('в наборе есть проекты')
+# else:
+#     print('объекты в наборе отсутствуют')
+
+
+# last_person=Person.objects.last()
+# is_present=Person.objects.filter(age__lt=35).contains(last_person)
+# if is_present:
+#     print("объект есть в наборе")
+# else:
+#     print('объект отсутствует')
+
+
+
+# number=Person.objects.count()
+# print(number)
+
+
+
+# people=Person.objects.all()
+# number=len(people)
+# print(number)
+
+
+
+# avg_age=Person.objects.aggregate(Avg('age'))
+# print(f'Средний возраст: {avg_age}')
+# min_age=Person.objects.aggregate(Min('age'))
+# print(f'Минимальный возраст: {min_age}')
+# max_age=Person.objects.aggregate(Max('age'))
+# print(f'Максимальный возраст : {max_age}')
+# sum=Person.objects.aggregate(Sum('age'))
+# print(f'Сумма : {sum}')
+
+
+
+# people=Person.objects.raw('SELECT id,name FROM myapp_person')
+# for person in people:
+#     print(person.name)
+
+
+
+# name_for_filter='Tom'
+# age_for_filter=35
+# people=Person.objects.raw('SELECT * FROM myapp_person WHERE name=%s OR age>%s',[name_for_filter,age_for_filter])
+# print(people)
+
+
+# with connection.cursor() as cursor:
+#     cursor.execute("UPDATE myapp_person SET name='Tomas' WHERE name='Tom' AND age=22")
+#     cursor.execute("SELECT * FROM myapp_person WHERE name='Tomas'")
+#     row=cursor.fetchone()
+#     print(row)
+
+
+# old_name='Tomas'
+# new_name='Tom'
+# with connection.cursor() as cursor:
+#     cursor.execute("UPDATE myapp_person SET name=%s WHERE name=%s",[new_name,old_name])
+#     cursor.execute("SELECT * FROM myapp_person WHERE name='Tom'")
+#     rows=cursor.fetchall()
+#     for row in rows:
+#         print(row)
+
+
+
+def index(request):
+    people = Person.objects.all()
+    return render(request, 'index.html', {'people': people})
+def create(request):
+    if request.method == 'POST':
+        person = Person()
+        person.name=request.POST.get('name')
+        person.age=request.POST.get('age')
+        person.save()
+    return HttpResponseRedirect('/')
+def edit(request,id):
+    try:
+        person = Person.objects.get(id=id)
+        if request.method == 'POST':
+            person.name=request.POST.get('name')
+            person.age=request.POST.get('age')
+            person.save()
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'edit.html', {'person': person})
+    except Person.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+def delete(request,id):
+    try:
+        person = Person.objects.get(id=id)
+        person.delete()
+        return HttpResponseRedirect('/')
+    except Person.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
