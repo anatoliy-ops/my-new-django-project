@@ -474,7 +474,7 @@
 <!--        .form-group input{width:250px;height:25px;border-radius:3px;}-->
 <!--    </style>-->
 <!--</head>-->
-<!--<body class="conrainer">-->
+<!--<body class="container">-->
 <!--    <form method="POST" novalidate>-->
 <!--        {% csrf_token %}-->
 <!--        <div>-->
@@ -553,38 +553,90 @@
 
 
 
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>Django kurs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form method="post" action="create/">-->
+<!--    {% csrf_token %}-->
+<!--    <p>-->
+<!--        <label>Введите имя</label><br>-->
+<!--        <input type="text" name="name">-->
+<!--    </p>-->
+<!--    <p>-->
+<!--        <label>Введите возраст</label><br>-->
+<!--        <input type="number" name="age">-->
+<!--    </p>-->
+<!--    <input type="submit" value="Сохранить">-->
+<!--</form>-->
+<!--{% if people.count > 0 %}-->
+<!--<h2>Список пользователей</h2>-->
+<!--<table>-->
+<!--    <thead><th>id</th><th>Имя</th><th>Возраст</th><th></th></thead>-->
+<!--    {% for person in people %}-->
+<!--    <tr>-->
+<!--        <td>{{ person.id }}</td>-->
+<!--        <td>{{ person.name }}</td>-->
+<!--        <td>{{ person.age }}</td>-->
+<!--        <td><a href="edit/{{person.id}}">Изменить</a>|<a href="delete/{{person.id}}">Удалить</a> </td>-->
+<!--    </tr>-->
+<!--    {% endfor %}-->
+<!--</table>-->
+<!--{% endif %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <title>METANIT.COM</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h2>Список товаров</h2>-->
+<!--    <a href="create/">Добавление товара</a>-->
+<!--    <table>-->
+<!--        <thead><th>Название</th><th>Цена</th><th>Компания</th><th></th></thead>-->
+<!--        {% for product in products %}-->
+<!--        <tr>-->
+<!--            <td>{{ product.name }}</td>-->
+<!--            <td>{{ product.price }}</td>-->
+<!--            <td>{{ product.company.name }}</td>-->
+<!--            <td>-->
+<!--                <a href="edit/{{product.id}}">Изменить</a> | <a href="delete/{{product.id}}">Удалить</a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--    </table>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--exam-->
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="eng">
 <head>
-    <meta charset="utf-8" />
-    <title>Django kurs</title>
+    <meta charset="UTF-8">
+    <title>Джанго курс</title>
 </head>
-<body>
-<form method="post" action="create/">
-    {% csrf_token %}
-    <p>
-        <label>Введите имя</label><br>
-        <input type="text" name="name">
-    </p>
-    <p>
-        <label>Введите возраст</label><br>
-        <input type="number" name="age">
-    </p>
-    <input type="submit" value="Сохранить">
-</form>
-{% if people.count > 0 %}
-<h2>Список пользователей</h2>
-<table>
-    <thead><th>id</th><th>Имя</th><th>Возраст</th><th></th></thead>
-    {% for person in people %}
-    <tr>
-        <td>{{ person.id }}</td>
-        <td>{{ person.name }}</td>
-        <td>{{ person.age }}</td>
-        <td><a href="edit/{{person.id}}">Изменить</a>|<a href="delete/{{person.id}}">Удалить</a> </td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif %}
+<body style="text-align: center; font-family: sans-serif; margin-top: 50px;">
+    <img src="{{ logo }}" width="120" alt="логотип">
+    <h2>Погода</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <p>{{ form.city }}</p>
+        <input type="submit" value="Узнать">
+    </form>
+    {% if error %}<p style="color: red;">{{ error }}</p>{% endif %}
 </body>
 </html>

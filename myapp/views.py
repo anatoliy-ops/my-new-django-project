@@ -7,11 +7,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponseForbidden, \
     HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
 from django.template.response import TemplateResponse
-from .models import Person,Order
+from .models import Person,Order,Company,Product
 from .forms import UserForm
 from django.db.models import Avg, Max, Min, Sum
 from django.db import connection
-
+import requests
 # def index(request):
 #     return HttpResponse("Hello")
 
@@ -605,33 +605,113 @@ from django.db import connection
 
 
 
-def index(request):
-    people = Person.objects.all()
-    return render(request, 'index.html', {'people': people})
-def create(request):
-    if request.method == 'POST':
-        person = Person()
-        person.name=request.POST.get('name')
-        person.age=request.POST.get('age')
-        person.save()
-    return HttpResponseRedirect('/')
-def edit(request,id):
-    try:
-        person = Person.objects.get(id=id)
-        if request.method == 'POST':
-            person.name=request.POST.get('name')
-            person.age=request.POST.get('age')
-            person.save()
-            return HttpResponseRedirect('/')
-        else:
-            return render(request, 'edit.html', {'person': person})
-    except Person.DoesNotExist:
-        return HttpResponseNotFound("<h2>Person not found</h2>")
-def delete(request,id):
-    try:
-        person = Person.objects.get(id=id)
-        person.delete()
-        return HttpResponseRedirect('/')
-    except Person.DoesNotExist:
-        return HttpResponseNotFound("<h2>Person not found</h2>")
+# def index(request):
+#     people = Person.objects.all()
+#     return render(request, 'index.html', {'people': people})
+# def create(request):
+#     if request.method == 'POST':
+#         person = Person()
+#         person.name=request.POST.get('name')
+#         person.age=request.POST.get('age')
+#         person.save()
+#     return HttpResponseRedirect('/')
+# def edit(request,id):
+#     try:
+#         person = Person.objects.get(id=id)
+#         if request.method == 'POST':
+#             person.name=request.POST.get('name')
+#             person.age=request.POST.get('age')
+#             person.save()
+#             return HttpResponseRedirect('/')
+#         else:
+#             return render(request, 'edit.html', {'person': person})
+#     except Person.DoesNotExist:
+#         return HttpResponseNotFound("<h2>Person not found</h2>")
+# def delete(request,id):
+#     try:
+#         person = Person.objects.get(id=id)
+#         person.delete()
+#         return HttpResponseRedirect('/')
+#     except Person.DoesNotExist:
+#         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
+# def index(request):
+#     products = Product.objects.all()
+#     return render(request, "index.html", {"products": products})
+# def create(request):
+#     create_companies()
+#     if request.method == "POST":
+#         product = Product()
+#         product.name = request.POST.get("name")
+#         product.price = request.POST.get("price")
+#         product.company_id = request.POST.get("company")
+#         product.save()
+#         return HttpResponseRedirect("/")
+#     companies = Company.objects.all()
+#     return render(request, "create.html", {"companies": companies})
+# def edit(request, id):
+#     try:
+#         product = Product.objects.get(id=id)
+#
+#         if request.method == "POST":
+#             product.name = request.POST.get("name")
+#             product.price = request.POST.get("price")
+#             product.company_id = request.POST.get("company")
+#             product.save()
+#             return HttpResponseRedirect("/")
+#         else:
+#             companies = Company.objects.all()
+#             return render(request, "edit.html", {"product": product, "companies": companies})
+#     except Product.DoesNotExist:
+#         return HttpResponseNotFound("<h2>Product not found</h2>")
+# def delete(request, id):
+#     try:
+#         product = Product.objects.get(id=id)
+#         product.delete()
+#         return HttpResponseRedirect("/")
+#     except Product.DoesNotExist:
+#         return HttpResponseNotFound("<h2>Product not found</h2>")
+# def create_companies():
+#     if Company.objects.all().count() == 0:
+#         Company.objects.create(name="Apple")
+#         Company.objects.create(name="Asus")
+#         Company.objects.create(name="MSI")
+
+
+
+# exam
+
+
+def get_weather(city_name):
+    API_key="0e4a910d79ceda1ebd523d3048725300"
+    ssilka=requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_key}&units=metric&lang=ru')
+    try:
+        data = ssilka.json()
+        if data.get('cod') == 200:
+            current_weather = data['weather'][0]
+            return {
+                'city': data['name'],
+                'country': data['sys']['country'],
+                'temp': int(data['main']['temp']),
+                'wind': data['wind']['speed'],
+                'desc': current_weather['description'],
+                'icon': current_weather['icon'],
+            }
+    except Exception as e:
+        print(f"Ошибка: {e}")
+    return None
+def index(request):
+    main_logo = "https://cdn-icons-png.flaticon.com"
+    if request.method == 'POST':
+        city = request.POST.get('city')
+        weather_data = get_weather(city)
+        if weather_data:
+            return render(request, 'result.html', {'weather': weather_data})
+        else:
+            return render(request, 'index.html', {
+                'form': UserForm(),
+                'logo': main_logo,
+                'error': 'Город не найден или ошибка API'
+            })
+    return render(request, 'index.html', {'form': UserForm(), 'logo': main_logo})

@@ -15,5 +15,6 @@ class UserForm(forms.Form):
     # age = forms.IntegerField(min_value=1,max_value=100)
     # required_css_class = 'field'
     # error_css_class = 'error'
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'my-field'}))
-    age = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'my-field'}))
+    # name = forms.CharField(widget=forms.TextInput(attrs={'class': 'my-field'}))
+    # age = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'my-field'}))
+    city=forms.CharField(max_length=20)
