@@ -12,6 +12,7 @@ from .forms import UserForm
 from django.db.models import Avg, Max, Min, Sum
 from django.db import connection
 import requests
+
 # def index(request):
 #     return HttpResponse("Hello")
 
