@@ -680,7 +680,7 @@ import requests
 
 
 
-# exam
+
 
 
 def get_weather(city_name):
