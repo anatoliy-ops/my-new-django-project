@@ -629,7 +629,7 @@
     <title>Джанго курс</title>
 </head>
 <body style="text-align: center; font-family: sans-serif; margin-top: 50px;">
-    <img src="{{ logo }}" width="120" alt="логотип">
+    <img src="{% static "images/weather.jpg" %}" width="120" alt="Pogoda">
     <h2>Погода</h2>
     <form method="POST">
         {% csrf_token %}

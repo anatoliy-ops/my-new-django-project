@@ -689,21 +689,20 @@ def get_weather(city_name):
     ssilka=requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_key}&units=metric&lang=ru')
     try:
         data = ssilka.json()
-        if data.get('cod') == 200:
-            current_weather = data['weather'][0]
-            return {
-                'city': data['name'],
-                'country': data['sys']['country'],
-                'temp': int(data['main']['temp']),
-                'wind': data['wind']['speed'],
-                'desc': current_weather['description'],
-                'icon': current_weather['icon'],
-            }
+        current_weather = data['weather'][0]
+
+        return {
+            'city': data['name'],
+            'country': data['sys']['country'],
+            'temp': int(data['main']['temp']),
+            'wind': data['wind']['speed'],
+            'desc': current_weather['description'],
+            'icon': current_weather['icon'],
+        }
     except Exception as e:
         print(f"Ошибка: {e}")
     return None
 def index(request):
-    main_logo = "https://cdn-icons-png.flaticon.com"
     if request.method == 'POST':
         city = request.POST.get('city')
         weather_data = get_weather(city)
@@ -712,7 +711,6 @@ def index(request):
         else:
             return render(request, 'index.html', {
                 'form': UserForm(),
-                'logo': main_logo,
                 'error': 'Город не найден или ошибка API'
             })
-    return render(request, 'index.html', {'form': UserForm(), 'logo': main_logo})
+    return render(request, 'index.html', {'form': UserForm()})

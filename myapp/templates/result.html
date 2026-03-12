@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <title>Результат</title>
 </head>
-<body style="text-align: center; font-family: sans-serif; margin-top: 50px;">
-    <img src="https://openweathermap.org{{ weather.icon }}@4x.png" alt="icon">
-    <h1>{{ weather.city }}, {{ weather.country }}</h1>
-    <p style="font-size: 30px;"><b>{{ weather.temp }}°C</b></p>
-    <p>На улице: {{ weather.desc }}</p>
-    <p>Ветер: {{ weather.wind }} м/с</p>
-    <br>
-    <a href="/">
-        <button type="button" style="padding: 10px 20px; cursor: pointer;">Назад</button>
-    </a>
+<body style="text-align: center; background: #87CEEB; font-family: sans-serif; padding-top: 50px;">
+    <div style="background: #FFD700; display: inline-block; width: 350px; height: 350px; border-radius: 50%; box-shadow: 0 0 50px #FFA500, inset 0 0 20px #FFF700; padding: 20px; color: #333;">
+        <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@4x.png" alt="icon">
+        <h1>Город: {{ weather.city }},В стране: {{ weather.country }}</h1>
+        <p style="font-size: 30px;"><b>{{ weather.temp }}°C</b></p>
+        <p>На улице: {{ weather.desc }}</p>
+        <p>Ветер: {{ weather.wind }} м/с</p>
+        <br>
+        <a href="/">
+            <button type="button" style="padding: 10px 20px; cursor: pointer;">Назад</button>
+        </a>
+    </div>
 </body>
 </html>
