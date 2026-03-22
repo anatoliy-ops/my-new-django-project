@@ -622,21 +622,61 @@
 
 
 
+<!--<!DOCTYPE html>-->
+<!--<html lang="eng">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Джанго курс</title>-->
+<!--</head>-->
+<!--<body style="text-align: center; font-family: sans-serif; margin-top: 50px;">-->
+<!--    <img src="{% static "images/weather.jpg" %}" width="120" alt="Pogoda">-->
+<!--    <h2>Погода</h2>-->
+<!--    <form method="POST">-->
+<!--        {% csrf_token %}-->
+<!--        <p>{{ form.city }}</p>-->
+<!--        <input type="submit" value="Узнать">-->
+<!--    </form>-->
+<!--    {% if error %}<p style="color: red;">{{ error }}</p>{% endif %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Джанго курс</title>
+    <title>Конвертер</title>
+    <style>
+        body { background: #f0f2f5; font-family: sans-serif; display: flex; padding-top: 50px;  justify-content: center;}
+        .box { background: #fff; padding: 20px; border-radius: 8px; width: 300px; border: 1px solid #ddd; }
+    </style>
 </head>
-<body style="text-align: center; font-family: sans-serif; margin-top: 50px;">
-    <img src="{% static "images/weather.jpg" %}" width="120" alt="Pogoda">
-    <h2>Погода</h2>
-    <form method="POST">
+<body>
+<div class="box">
+    <h3 style="text-align:center; margin-top:0;">Курс валют</h3>
+    {% if curs %}
+    <div>
+        1 USD = <b>{{ curs.dollar }}</b> сум<br>
+        1 EUR = <b>{{ curs.evro }}</b> сум<br>
+        1 RUB = <b>{{ curs.rubl }}</b> сум
+    </div>
+    {% endif %}
+    <form method="post">
         {% csrf_token %}
-        <p>{{ form.city }}</p>
-        <input type="submit" value="Узнать">
+        <input type="number" style="width: 100%; padding: 10px; margin: 5px 0; box-sizing: border-box;" name="quantity" placeholder="Введите сумму" value="{{ quantity|default:'' }}" required>
+        <button type="submit" style="background:#28a745; color:#fff; border:none; cursor:pointer;width: 100%; padding: 10px; margin: 5px 0; box-sizing: border-box;">Посчитать</button>
     </form>
-    {% if error %}<p style="color: red;">{{ error }}</p>{% endif %}
+    {% if result %}
+        <div style="margin-top: 15px;">
+            <div><span>Итого USD:</span> <b>{{ result.dollar }}</b></div>
+            <div><span>Итого EUR:</span> <b>{{ result.evro }}</b></div>
+            <div><span>Итого RUB:</span> <b>{{ result.rubl }}</b></div>
+        </div>
+    {% endif %}
+</div>
+
 </body>
 </html>

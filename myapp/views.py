@@ -684,33 +684,95 @@ import requests
 
 
 
-def get_weather(city_name):
-    API_key="0e4a910d79ceda1ebd523d3048725300"
-    ssilka=requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_key}&units=metric&lang=ru')
-    try:
-        data = ssilka.json()
-        current_weather = data['weather'][0]
+# def get_weather(city_name):
+#     API_key="0e4a910d79ceda1ebd523d3048725300"
+#     ssilka=requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_key}&units=metric&lang=ru')
+#     try:
+#         data = ssilka.json()
+#         current_weather = data['weather'][0]
+#         return {
+#             'city': data['name'],
+#             'country': data['sys']['country'],
+#             'temp': int(data['main']['temp']),
+#             'wind': data['wind']['speed'],
+#             'desc': current_weather['description'],
+#             'icon': current_weather['icon'],
+#         }
+#     except Exception as e:
+#         print(f"Ошибка: {e}")
+#     return None
+# def index(request):
+#     if request.method == 'POST':
+#         city = request.POST.get('city')
+#         weather_data = get_weather(city)
+#         if weather_data:
+#             return render(request, 'result.html', {'weather': weather_data})
+#         else:
+#             return render(request, 'index.html', {
+#                 'form': UserForm(),
+#                 'error': 'Город не найден или ошибка API'
+#             })
+#     return render(request, 'index.html', {'form': UserForm()})
 
+
+def num(a):
+    a=str(a)
+    a=a.split('.')
+    a=a[0]
+    b=a[::-1]
+    da=''
+    d=0
+    for i in b:
+        d+=1
+        da+=i
+        if d==3:
+            da+=' '
+            d=0
+    da=da[::-1]
+    return da
+def curs():
+    try:
+        bank = requests.get('https://cbu.uz/ru/arkhiv-kursov-valyut/json/')
+        bank_json=bank.json()
+        dollar=bank_json[0]['Rate']
+        evro=bank_json[1]['Rate']
+        rubl=bank_json[2]['Rate']
         return {
-            'city': data['name'],
-            'country': data['sys']['country'],
-            'temp': int(data['main']['temp']),
-            'wind': data['wind']['speed'],
-            'desc': current_weather['description'],
-            'icon': current_weather['icon'],
+            'dollar':dollar,
+            'evro':evro,
+            'rubl':rubl,
         }
     except Exception as e:
-        print(f"Ошибка: {e}")
+        print(f'Ошибка: {e}')
+    return None
+def conv(quantity):
+    try:
+        bank = requests.get('https://cbu.uz/ru/arkhiv-kursov-valyut/json/')
+        bank_json=bank.json()
+        dollar=bank_json[0]['Rate']
+        evro=bank_json[1]['Rate']
+        rubl=bank_json[2]['Rate']
+        dollar1=f'{num(float(dollar)*int(quantity))}'
+        evro1=f'{num(float(evro)*int(quantity))}'
+        rubl1=f'{num(float(rubl)*int(quantity))}'
+        return {
+            'dollar':dollar1,
+            'evro':evro1,
+            'rubl':rubl1,
+        }
+    except Exception as e:
+        print(f'Ошибка: {e}')
     return None
 def index(request):
+    curs_all = curs()
+    result = None
+    quantity = None
     if request.method == 'POST':
-        city = request.POST.get('city')
-        weather_data = get_weather(city)
-        if weather_data:
-            return render(request, 'result.html', {'weather': weather_data})
-        else:
-            return render(request, 'index.html', {
-                'form': UserForm(),
-                'error': 'Город не найден или ошибка API'
-            })
-    return render(request, 'index.html', {'form': UserForm()})
+        quantity = request.POST.get('quantity')
+        if quantity:
+            result = conv(quantity)
+    return render(request, 'index.html', {
+        'curs': curs_all,
+        'result': result,
+        'quantity': quantity
+    })
